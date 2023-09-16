@@ -132,7 +132,7 @@ function Catalog() {
 			<div className=" mx-auto box-content w-full max-w-maxContentTab lg:max-w-maxContent px-4 py-12 ">
 				<p className="text-2xl font-semibold">Frequently Bought</p>
 				<div className="py-8">
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-14">
 						{catalogPageData?.data?.mostSellingCourses
 							?.slice(0, 4)
 							.map((course, index) => (
