@@ -81,7 +81,7 @@ function Navbar() {
 
 				{(menu || tabMenu) && (
 					<div
-						className="text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent z-[1000] shadow-sm shadow-richblack-500"
+						className="text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500"
 						onMouseLeave={() => setMenu(false)}
 						ref={ref}
 					>
