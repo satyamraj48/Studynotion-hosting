@@ -73,6 +73,7 @@ function CodeBlocks({
 						repeat={Infinity}
 						cursor={true}
 						style={{
+							fontSize: "10px",
 							whiteSpace: "pre-line",
 							display: "block",
 						}}

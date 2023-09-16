@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import "../node_modules/video-react/dist/video-react.css";
@@ -29,13 +29,19 @@ import CourseDetails from "./Pages/CourseDetails";
 import ViewCourse from "./Pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCoursePage/VideoDetails";
 import InstructorDashboard from "./components/core/Dashboard/InstructorDashboard/InstructorDashboard";
+import { useState } from "react";
 
 const App = () => {
 	const { user } = useSelector((state) => state.profile);
+	const [menuRoot, setMenuRoot] = useState(false);
 
 	return (
-		<div className=" w-screen min-h-screen bg-richblack-900 flex flex-col items-center font-inter ">
-			<Navbar />
+		<div
+			className={`w-screen min-h-screen bg-richblack-900 flex flex-col items-center font-inter ${
+				menuRoot && "overflow-y-hidden"
+			} `}
+		>
+			<Navbar setMenuRoot={setMenuRoot} />
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />

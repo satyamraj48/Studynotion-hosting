@@ -51,7 +51,7 @@ function Home() {
 
 				<div className=" mx-3 my-16 relative ">
 					<video
-						className=" shadow-[20px_20px_0px_5px] z-10 relative "
+						className=" shadow-[10px_10px_0px_5px] md:shadow-[20px_20px_0px_5px] z-10 relative "
 						muted
 						loop
 						autoPlay

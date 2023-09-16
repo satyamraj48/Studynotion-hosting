@@ -12,7 +12,7 @@ import { FcMenu } from "react-icons/fc";
 import { useRef } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-function Navbar() {
+function Navbar({ setMenuRoot }) {
 	const { token } = useSelector((state) => state.auth);
 	const { user } = useSelector((state) => state.profile);
 	const { totalItems } = useSelector((state) => state.cart);
@@ -28,6 +28,7 @@ function Navbar() {
 	useOnClickOutside(ref, () => {
 		setMenu(false);
 		setTabMenu(false);
+		setMenuRoot(false);
 	});
 
 	function routeMatch(route) {
@@ -72,9 +73,17 @@ function Navbar() {
 				{/* Navigation links */}
 				{/* menu button for small screen */}
 				<button
-					className="flex md:hidden"
-					onMouseOver={() => setMenu(true)}
-					onClick={() => setMenu(!menu)}
+					className="flex md:hidden z-[2001]"
+					onMouseOver={() => {
+						setMenu(true);
+						setTabMenu(false);
+						setMenuRoot(menu);
+					}}
+					onClick={() => {
+						setMenu(!menu);
+						setTabMenu(false);
+						setMenuRoot(menu);
+					}}
 				>
 					<FcMenu className="text-3xl" />
 				</button>
@@ -82,7 +91,10 @@ function Navbar() {
 				{(menu || tabMenu) && (
 					<div
 						className="text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500"
-						onMouseLeave={() => setMenu(false)}
+						onMouseLeave={() => {
+							setMenu(false);
+							setMenuRoot(menu);
+						}}
 						ref={ref}
 					>
 						<ul className="flex items-center justify-evenly gap-x-4 md:gap-x-6 text-richblack-25">
