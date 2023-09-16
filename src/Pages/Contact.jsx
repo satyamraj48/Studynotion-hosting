@@ -30,7 +30,7 @@ function Contact() {
 		<>
 			<div className="mt-[100px] w-11/12 max-w-maxContent min-h-[calc(100vh-3.5rem)] text-richblack-5">
 				{/* section 1 */}
-				<section className="flex flex-col md:flex-row md:items-start items-center gap-10 md:justify-around">
+				<section className="flex flex-col md:flex-row md:items-start items-center gap-x-10 gap-y-20 md:justify-around">
 					<div className="sm:w-[75%] md:w-[42%] lg:w-[37%] h-[50%] p-6 rounded-xl flex flex-col gap-12 bg-richblack-800">
 						{contactDetails.map((elem, index) => (
 							<div key={index} className="flex flex-col">

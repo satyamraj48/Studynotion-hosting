@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 function Template({ title, desc1, desc2, image, formtype }) {
 
 	return (
-		<div className="flex w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 justify-between gap-y-0">
+		<div className="flex flex-col-reverse items-center md:flex-row md:items-start md:justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-12">
 			<div className="text-richblack-5 w-full max-w-[450px] ">
 				<h1 className="text-[1.875rem] leading-[2.375rem] font-semibold  ">
 					{title}

@@ -148,13 +148,13 @@ function Home() {
 				</div>
 
 				<div className=" w-11/12 mx-auto max-w-maxContent flex flex-col items-center justify-between gap-7">
-					<div className="flex flex-row justify-between gap-16 mb-10 mt-[95px]">
-						<div className="w-[40%] lg:w-[45%] text-4xl font-semibold">
+					<div className="flex flex-col items-center md:flex-row md:justify-between gap-16 mb-10 mt-[95px]">
+						<div className="w-[80%] lg:w-[45%] text-4xl font-semibold">
 							Get the Skills you need for a{" "}
 							<HighlightText text={"Job that is in demand."} />
 						</div>
 
-						<div className="flex flex-col gap-5 w-[40%] items-start ">
+						<div className="flex flex-col gap-5 w-[80%] items-start ">
 							<div className="text-[16px] text-richblack-700 ">
 								The modern StudyNotion is the dictates its own terms. Today, to
 								be a competitive specialist requires more than professional

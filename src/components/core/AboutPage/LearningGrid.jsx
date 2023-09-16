@@ -44,21 +44,20 @@ const LearningGridArray = [
 	},
 ];
 
-function 
-LearningGrid() {
+function LearningGrid() {
 	return (
-		<div className=" grid grid-cols-1 lg:grid-cols-4 mb-10 px-16 my-3 w-fit text-left">
+		<div className="mx-auto grid grid-cols-1 min-w-[300px] w-[60%] md:w-[50%] lg:w-[45%] xl:w-fit xl:grid-cols-4 mb-12 text-left">
 			{LearningGridArray.map((elem, index) => (
 				<div
 					key={index}
-					className={`${index === 0 && "lg:col-span-2 "} ${
-						elem.order % 2 !== 0 ? "bg-richblack-700" : "bg-richblack-800"
-					} ${elem.order === 3 && "lg:col-start-2"} ${
+					className={`${index === 0 && "xl:col-span-2 xl:h-[294px] xl:mb-0 mb-6 "} ${
+						elem.order % 2 !== 0 ? "bg-richblack-700 h-[294px]" : "bg-richblack-800 h-[294px]"
+					} ${elem.order === 3 && "xl:col-start-2"} ${
 						elem.order < 0 && "bg-transparent"
-					} lg:h-[280px]`}
+					} `}
 				>
 					{elem.order < 0 ? (
-						<div className="lg:w-[90%] flex flex-col p-3 gap-5 ">
+						<div className="xl:w-[90%] h-fit flex flex-col pb-10 gap-3 xl:pb-0 ">
 							<h1 className=" text-4xl font-semibold">
 								{elem.heading}{" "}
 								<p className="bg-gradient-to-tr from-[#5433FF] via-[#20BDFF] to-[#A5FECB] text-transparent bg-clip-text">
@@ -70,16 +69,18 @@ LearningGrid() {
 								{elem.description}
 							</p>
 
-							<div className="w-fit">
+							<div className="w-fit mt-2">
 								<CTAButton linkto={elem.BtnLink} active={true}>
 									{elem.BtnText}
 								</CTAButton>
 							</div>
 						</div>
 					) : (
-						<div className="lg:w-[90%] flex flex-col gap-4 px-5 py-7 ">
-							<p className="text-lg font-semibold text-richblack-25">{elem.heading}</p>
-							<p className="text-richblack-100 text-sm font-base mt-6">
+						<div className="flex flex-col gap-8 p-8 ">
+							<h1 className="text-lg font-semibold text-richblack-25">
+								{elem.heading}
+							</h1>
+							<p className="text-richblack-300 text-sm font-base mt-6">
 								{elem.description}
 							</p>
 						</div>
