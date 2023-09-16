@@ -16,8 +16,10 @@ function CodeBlocks({
 	return (
 		<div
 			className={`my-16 flex ${
-				position === "flex-row-reverse" ? "flex-col-reverse" : "flex-col"
-			} lg:${position} gap-20 lg:gap-60 `}
+				position === "flex-row-reverse"
+					? "flex-col-reverse lg:flex-row-reverse"
+					: "flex-col lg:flex-row"
+			} gap-20 lg:gap-60 `}
 		>
 			{/* Section 1 */}
 			<div className="mx-auto lg:mx-0 w-[80%] lg:w-[45%] flex flex-col gap-8">

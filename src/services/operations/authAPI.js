@@ -83,6 +83,7 @@ export function signUp(
 
 export function login(email, password, navigate) {
 	return async (dispatch) => {
+		const toastId = toast.loading("Loading");
 		dispatch(setLoading(true));
 		try {
 			const response = await apiconnector("POST", LOGIN_API, {
@@ -113,6 +114,7 @@ export function login(email, password, navigate) {
 			toast.error("Login Failed!");
 		}
 		dispatch(setLoading(false));
+		toast.dismiss(toastId);
 	};
 }
 
