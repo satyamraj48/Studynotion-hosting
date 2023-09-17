@@ -28,7 +28,7 @@ exports.sendOTP = async (req, res) => {
 		console.log("OTP ->  ", otp);
 
 		//check unique otp or not
-		const result = await OTP.findOne({ otp: otp });
+		let result = await OTP.findOne({ otp: otp });
 		while (result) {
 			otp = otpGenerator(6, {
 				upperCaseAlphabets: false,
@@ -105,9 +105,10 @@ exports.signUp = async (req, res) => {
 				message: "OTP Not Found",
 			});
 		} else if (otp !== recentOtp[0].otp) {
-			return res.status(400).json({
-				success: false,
+			return res.status(200).json({
+				success: true,
 				message: "OTP is not valid",
+				otpVerify: false,
 			});
 		}
 		const hashedPassword = await bcrypt.hash(password, 10);
@@ -131,6 +132,7 @@ exports.signUp = async (req, res) => {
 		return res.status(200).json({
 			success: true,
 			message: "User is registered Successfully",
+			otpVerify: true,
 			user,
 		});
 	} catch (error) {

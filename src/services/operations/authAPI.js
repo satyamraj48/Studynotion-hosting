@@ -69,8 +69,12 @@ export function signUp(
 				throw new Error(response.data.message);
 			}
 
-			toast.success("SignUp Successful");
-			navigate("/login");
+			if (response.data.success && !response.data.otpVerify) {
+				toast.error("Invalid OTP");
+			} else {
+				toast.success("SignUp Successful");
+				navigate("/login");
+			}
 		} catch (error) {
 			console.log("SIGNUP API ERROR.........", error);
 			toast.error("Signup Failed");
