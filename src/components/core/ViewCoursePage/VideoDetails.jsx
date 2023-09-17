@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { updateCompletedLectures } from "../../../reducer/slices/viewCourseSlice";
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
 import { BigPlayButton, Player } from "video-react";
-import { AiFillPlayCircle } from "react-icons/ai";
 
 function VideoDetails() {
 	const { courseId, sectionId, subSectionId } = useParams();

@@ -14,7 +14,7 @@ const OTPSchema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now(),
-		expires: 5 * 60 * 1000, // The document will be automatically deleted after 5 minutes of its creation time
+		expires: 5, // The document will be automatically deleted after 5 minutes of its creation time
 	},
 });
 

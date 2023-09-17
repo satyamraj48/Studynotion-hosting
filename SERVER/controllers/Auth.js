@@ -25,7 +25,7 @@ exports.sendOTP = async (req, res) => {
 			lowerCaseAlphabets: false,
 			specialChars: false,
 		});
-		console.log("OTP ->  ", otp);
+		// console.log("OTP ->  ", otp);
 
 		//check unique otp or not
 		let result = await OTP.findOne({ otp: otp });
@@ -41,8 +41,8 @@ exports.sendOTP = async (req, res) => {
 		const otpPayload = { email, otp };
 		//create entry in DB
 		const otpBody = await OTP.create(otpPayload);
-		console.log(otpBody);
-		res.status(200).json({
+		// console.log("otpBody-> ",otpBody);
+		return res.status(200).json({
 			success: true,
 			message: "OTP Sent Successfully",
 		});
@@ -104,11 +104,13 @@ exports.signUp = async (req, res) => {
 				success: true,
 				message: "OTP Not Found, Please resend OTP!",
 				otpPresent: false,
+				otpVerify: false,
 			});
 		} else if (otp !== recentOtp[0].otp) {
 			return res.status(200).json({
 				success: true,
 				message: "OTP is not valid",
+				otpPresent: true,
 				otpVerify: false,
 			});
 		}
