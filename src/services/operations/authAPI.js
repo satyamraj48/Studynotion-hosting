@@ -69,8 +69,10 @@ export function signUp(
 				throw new Error(response.data.message);
 			}
 
-			if (response.data.success && !response.data.otpVerify) {
-				toast.error("Invalid OTP");
+			if (response.data.success && !response.data.otpPresent) {
+				toast.error("OTP not found, Please Resend OTP!");
+			} else if (response.data.success && !response.data.otpVerify) {
+				toast.error("Invalid OTP, Please Verify!");
 			} else {
 				toast.success("SignUp Successful");
 				navigate("/login");

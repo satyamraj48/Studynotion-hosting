@@ -100,9 +100,10 @@ exports.signUp = async (req, res) => {
 			.limit(1);
 
 		if (recentOtp.length == 0) {
-			return res.status(400).json({
-				success: false,
-				message: "OTP Not Found",
+			return res.status(200).json({
+				success: true,
+				message: "OTP Not Found, Please resend OTP!",
+				otpPresent: false,
 			});
 		} else if (otp !== recentOtp[0].otp) {
 			return res.status(200).json({
@@ -132,6 +133,7 @@ exports.signUp = async (req, res) => {
 		return res.status(200).json({
 			success: true,
 			message: "User is registered Successfully",
+			otpPresent: true,
 			otpVerify: true,
 			user,
 		});
