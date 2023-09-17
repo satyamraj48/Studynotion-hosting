@@ -4,7 +4,6 @@ const Course = require("../models/Course");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
 const CourseProgress = require("../models/CourseProgress");
-const { CgEditExposure } = require("react-icons/cg");
 
 exports.updateProfile = async (req, res) => {
 	try {
