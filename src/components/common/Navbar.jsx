@@ -11,6 +11,7 @@ import { categories } from "../../services/apis";
 import { FcMenu } from "react-icons/fc";
 import { useRef } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import { useLayoutEffect } from "react";
 
 function Navbar({ setMenuRoot }) {
 	const { token } = useSelector((state) => state.auth);
@@ -27,8 +28,7 @@ function Navbar({ setMenuRoot }) {
 	const ref = useRef();
 	useOnClickOutside(ref, () => {
 		setMenu(false);
-		setTabMenu(false);
-		setMenuRoot(false);
+		// setMenuRoot(false);
 	});
 
 	function routeMatch(route) {
@@ -47,6 +47,27 @@ function Navbar({ setMenuRoot }) {
 		setLoading(false);
 	};
 
+	//window width
+	const ref1 = useRef(null);
+	const [width, setWidth] = useState(0);
+	useLayoutEffect(() => {
+		// setWidth(ref1.current.offsetWidth);
+		getWindowSize();
+		getWindowSize();
+	}, []);
+
+	const getWindowSize = () => {
+		setWidth(ref1.current.offsetWidth);
+		if (width >= 768) {
+			setTabMenu(true);
+			setMenu(false);
+		} else {
+			setTabMenu(false);
+		}
+	};
+	window.addEventListener("resize", getWindowSize);
+
+	//category fetch
 	useEffect(() => {
 		fetchSubLinks();
 	}, []);
@@ -56,9 +77,10 @@ function Navbar({ setMenuRoot }) {
 			className={`w-full h-14 flex items-center justify-center ${
 				location.pathname !== "/" && "bg-richblack-800"
 			} border-b border-richblack-700 text-richblack-25 transition-all duration-200`}
+			ref={ref1}
 		>
 			<div className="relative flex w-11/12 max-w-maxContent items-center justify-between gap-x-8">
-				{/* Logo */}
+				{/* Logo */}{" "}
 				<Link to="/">
 					<img
 						src={logo}
@@ -68,7 +90,10 @@ function Navbar({ setMenuRoot }) {
 						loading="lazy"
 					/>
 				</Link>
-
+				{/* <p className="text-richblack-5">
+					Hello -{tabMenu ? "1" : "0"}
+					jee- {menu ? "1" : "0"}
+				</p> */}
 				{/* Navigation links */}
 				{/* menu button for small screen */}
 				<button
@@ -77,21 +102,23 @@ function Navbar({ setMenuRoot }) {
 						setMenu(true);
 					}}
 					onClick={() => {
-						setMenu(!menu);
+						setMenu(true);
 					}}
 				>
 					<FcMenu className="text-3xl" />
 				</button>
-
 				{true && (
 					<div
-						className={`text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500 `}
+						className={`text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500 ${
+							tabMenu ? "block" : menu ? "block" : "hidden"
+						} `}
 						onMouseLeave={() => {
 							setMenu(false);
-							setMenuRoot(menu);
+							// setMenuRoot(menu);
 						}}
 						ref={ref}
 					>
+						{/* {width}px */}
 						<ul className="flex items-center justify-evenly gap-x-4 md:gap-x-6 text-richblack-25">
 							{NavbarLinks.map((elem, i) => (
 								<li key={i}>
@@ -123,7 +150,9 @@ function Navbar({ setMenuRoot }) {
 																	key={index}
 																	className={`transition-all duration-150 bg-transparent hover:bg-richblack-50 rounded-lg pl-4 py-3 pr-2 `}
 																>
-																	{sublink.name}
+																	<p onClick={() => setMenu(false)}>
+																		{sublink.name}
+																	</p>
 																</Link>
 															))
 														) : (
@@ -141,6 +170,7 @@ function Navbar({ setMenuRoot }) {
 														? "text-yellow-25"
 														: "text-richblack-25"
 												} text-center active:text-yellow-25 `}
+												onClick={() => setMenu(false)}
 											>
 												{elem.title}
 											</p>
@@ -151,7 +181,6 @@ function Navbar({ setMenuRoot }) {
 						</ul>
 					</div>
 				)}
-
 				{/* Login SignUp Dashboard */}
 				<div className="flex items-center gap-x-5">
 					{user && user?.accountType !== "Instructor" && (
