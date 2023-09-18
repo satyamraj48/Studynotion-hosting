@@ -8,6 +8,7 @@ const {
 	signUp,
 	sendOTP,
 	changePassword,
+	googleSignInUp,
 } = require("../controllers/Auth");
 
 const {
@@ -19,13 +20,16 @@ const {
 //***********************************************************************************************
 
 // Route for user login
-router.post("/login", login);
+router.post("/sendotp", sendOTP);
 
 // Route for user signup
 router.post("/signup", signUp);
 
 // Route for user login
-router.post("/sendotp", sendOTP);
+router.post("/login", login);
+
+// Route for google signin and signup
+router.post("/googleSignInUp", googleSignInUp);
 
 // Route for user login
 router.post("/changepassword", auth, changePassword);

@@ -39,11 +39,10 @@ function Navbar({ setMenuRoot }) {
 		setLoading(true);
 		try {
 			const result = await apiconnector("GET", categories.CATEGORIES_API);
-			console.log("Printing Sublinks result-> ", result.data.data);
+			// console.log("Printing Sublinks result-> ", result.data.data);
 			setSubLinks(result.data.data);
 		} catch (error) {
-			console.log("Could not fetch category list");
-			console.log(error);
+			console.log("Could not fetch category list", error);
 		}
 		setLoading(false);
 	};
@@ -76,21 +75,17 @@ function Navbar({ setMenuRoot }) {
 					className="flex md:hidden z-[2001]"
 					onMouseOver={() => {
 						setMenu(true);
-						setTabMenu(false);
-						setMenuRoot(menu);
 					}}
 					onClick={() => {
 						setMenu(!menu);
-						setTabMenu(false);
-						setMenuRoot(menu);
 					}}
 				>
 					<FcMenu className="text-3xl" />
 				</button>
 
-				{(menu || tabMenu) && (
+				{true && (
 					<div
-						className="text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500"
+						className={`text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500 `}
 						onMouseLeave={() => {
 							setMenu(false);
 							setMenuRoot(menu);

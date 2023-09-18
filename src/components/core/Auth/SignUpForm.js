@@ -39,7 +39,7 @@ function SignUpForm() {
 		}
 		
 		const signupData = { ...formData, accountType };
-		console.log("signupData-> ", signupData);
+		// console.log("signupData-> ", signupData);
 
 		// Setting signup data to state
 		// To be used after otp verification

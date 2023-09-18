@@ -7,6 +7,10 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./reducer";
 import { Toaster } from "react-hot-toast";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
+const clientId =
+	"899718889834-b5d6tagtgg39tahdkcqffsliocnocji6.apps.googleusercontent.com";
 
 const store = configureStore({
 	reducer: rootReducer,
@@ -17,7 +21,9 @@ root.render(
 	<>
 		<BrowserRouter>
 			<Provider store={store}>
-				<App />
+				<GoogleOAuthProvider clientId={clientId}>
+					<App />
+				</GoogleOAuthProvider>
 			</Provider>
 			<Toaster />
 		</BrowserRouter>

@@ -9,6 +9,7 @@ const {
 	SENDOTP_API,
 	SIGNUP_API,
 	LOGIN_API,
+	GOOGLE_SIGNIN_SIGNUP_API,
 	RESET_PASSWORD_TOKEN_API,
 	RESET_PASSWORD_API,
 } = authEndpoints;
@@ -22,7 +23,7 @@ export function sendOtp(email, navigate) {
 				email,
 			});
 
-			console.log("SEND OTP API RESPONSE.........", response);
+			// console.log("SEND OTP API RESPONSE.........", response);
 
 			if (!response.data.success) {
 				throw new Error(response.data.message);
@@ -54,12 +55,12 @@ export function signUp(
 		dispatch(setLoading(true));
 		try {
 			const response = await apiconnector("POST", SIGNUP_API, {
+				firstName,
+				lastName,
 				email,
 				password,
 				confirmPassword,
 				accountType,
-				firstName,
-				lastName,
 				otp,
 			});
 
@@ -87,6 +88,55 @@ export function signUp(
 	};
 }
 
+export function googleSignInSignUp(
+	firstName,
+	lastName,
+	email,
+	password,
+	confirmPassword,
+	accountType,
+	navigate
+) {
+	return async (dispatch) => {
+		const toastId = toast.loading("Loading...");
+		dispatch(setLoading(true));
+		try {
+			const response = await apiconnector("POST", GOOGLE_SIGNIN_SIGNUP_API, {
+				firstName,
+				lastName,
+				email,
+				password,
+				confirmPassword,
+				accountType,
+			});
+
+			// console.log("GOOGLE SIGNIN & SIGNUP API RESPONSE.........", response);
+
+			if (!response.data.success) {
+				throw new Error(response.data.message);
+			}
+
+			toast.success("Login with Google Successful");
+
+			//set token for auth
+			dispatch(setToken(response.data.token));
+			localStorage.setItem("token", JSON.stringify(response.data.token));
+
+			//set user for profile
+			dispatch(setUser(response.data.user));
+			localStorage.setItem("user", JSON.stringify(response.data.user));
+
+			navigate("/dashboard/my-profile");
+		} catch (error) {
+			console.log("GOOGLE SIGNUP API ERROR.........", error);
+			toast.error("Google Signup Failed");
+			navigate("/signup");
+		}
+		dispatch(setLoading(false));
+		toast.dismiss(toastId);
+	};
+}
+
 export function login(email, password, navigate) {
 	return async (dispatch) => {
 		const toastId = toast.loading("Loading");
@@ -97,7 +147,7 @@ export function login(email, password, navigate) {
 				password,
 			});
 
-			console.log("LOGIN API RESPONSE.........", response);
+			// console.log("LOGIN API RESPONSE.........", response);
 
 			if (!response.data.success) {
 				throw new Error(response.data.message);
@@ -132,7 +182,7 @@ export function getPasswordResetToken(email, setSentEmail) {
 			const response = await apiconnector("POST", RESET_PASSWORD_TOKEN_API, {
 				email,
 			});
-			console.log("RESET PASSWORD TOKEN RESPONSE.....", response);
+			// console.log("RESET PASSWORD TOKEN RESPONSE.....", response);
 			if (!response.data.success) {
 				throw new Error(response.data.message);
 			}
@@ -158,7 +208,7 @@ export function resetPassword(password, confirmPassword, token, navigate) {
 				token,
 			});
 
-			console.log("RESET PASSWORD RESPONSE....", response);
+			// console.log("RESET PASSWORD RESPONSE....", response);
 
 			if (!response.data.success) {
 				throw new Error(response.data.message);

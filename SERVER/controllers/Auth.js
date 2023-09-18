@@ -5,6 +5,7 @@ const Profile = require("../models/Profile");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
+const signUpTemplate = require("../mail/templates/accountSignUpEmail");
 require("dotenv").config();
 
 //sendOTP for Email Verification
@@ -66,8 +67,8 @@ exports.signUp = async (req, res) => {
 			confirmPassword,
 			accountType,
 			otp,
-			contactNumber,
 		} = req.body;
+
 		if (
 			!firstName ||
 			!lastName ||
@@ -126,7 +127,6 @@ exports.signUp = async (req, res) => {
 			firstName,
 			lastName,
 			email,
-			contactNumber,
 			password: hashedPassword,
 			accountType,
 			additionalDetails: profileDetails._id,
@@ -144,6 +144,117 @@ exports.signUp = async (req, res) => {
 		return res.status(500).json({
 			success: false,
 			message: "User cannot be registered. Please try again",
+		});
+	}
+};
+
+//google signup
+exports.googleSignInUp = async (req, res) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			email,
+			password,
+			confirmPassword,
+			accountType,
+		} = req.body;
+		// console.log(
+		// 	"BD---> ",
+		// 	firstName,
+		// 	lastName,
+		// 	email,
+		// 	password,
+		// 	confirmPassword
+		// );
+		if (!firstName || !lastName || !email || !password || !confirmPassword) {
+			return res.status(403).json({
+				success: false,
+				message: "All fields are required in google signin & signup",
+			});
+		}
+		if (password !== confirmPassword) {
+			return res.status(400).json({
+				success: false,
+				message: "Passwords does not match",
+			});
+		}
+
+		const existingUser = await User.findOne({ email });
+		if (!existingUser) {
+			const hashedPassword = await bcrypt.hash(password, 10);
+
+			const profileDetails = await Profile.create({
+				gender: null,
+				dateOfBirth: null,
+				about: null,
+				contactNumber: null,
+			});
+			const user = await User.create({
+				firstName,
+				lastName,
+				email,
+				password: hashedPassword,
+				accountType,
+				additionalDetails: profileDetails._id,
+				image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+			});
+
+			// send mail for sign up successful
+			await mailSender(
+				email,
+				"Study Notion - Account Created Successfully",
+				signUpTemplate(email, password)
+			);
+		}
+		//user h to login kra do
+		googleAccountLogin(email, res);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			success: false,
+			message: "User cannot be registered with Google. Please try again",
+		});
+	}
+};
+
+//google account login function
+const googleAccountLogin = async (email, res) => {
+	try {
+		const user = await User.findOne({ email }).populate("additionalDetails");
+		if (!user) {
+			return res.status(400).json({
+				success: false,
+				message: "User not found while Google Login",
+			});
+		}
+
+		const payload = {
+			email: user.email,
+			id: user._id,
+			accountType: user.accountType,
+		};
+
+		const token = jwt.sign(payload, process.env.JWT_SECRET, {
+			expiresIn: "2h",
+		});
+		user.token = token;
+		user.password = undefined;
+		const options = {
+			expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+			httpOnly: true,
+		};
+		res.cookie("token", token, options).status(200).json({
+			success: true,
+			token,
+			user,
+			message: "Google Logged in Successfully",
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			success: false,
+			message: "Google Login Failure. Please try again",
 		});
 	}
 };
