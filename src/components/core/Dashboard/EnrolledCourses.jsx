@@ -58,7 +58,7 @@ function EnrolledCourses() {
 										<img
 											src={course.thumbnail}
 											alt="Course Thumbnail"
-											className="w-16 h-16 aspect-square rounded-full object-cover "
+											className="w-10 h-10 sm:w-16 sm:h-16 aspect-square rounded-full object-cover "
 										/>
 
 										<div className="max-w-xs space-y-1">

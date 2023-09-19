@@ -29,28 +29,26 @@ function DeleteAccount() {
 	}
 
 	return (
-		
-			<div className="px-12 py-8 my-10 border border-pink-700 rounded-lg bg-pink-900 text-richblack-5 flex gap-5">
-				<div className=" w-14 h-14 aspect-square flex items-center justify-center bg-pink-700 rounded-full ">
-					<FiTrash2 className="text-3xl text-pink-200" />
-				</div>
-				<div className="w-[45%] space-y-2">
-					<h2 className="text-lg font-semibold">Delete Account</h2>
-					<p className="text-pink-25">Would you like to delete account?</p>
-					<p className="text-md text-pink-25">
-						This account contains Paid Courses. Deleting your account will
-						remove all the contain associated with it.
-					</p>
-					<button
-						onClick={handleDeleteAccount}
-						className="text-lg w-fit cursor-pointer text-pink-300 italic"
-					>
-						I want to delete my account.
-					</button>
-				</div>
-			{confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+		<div className="px-12 py-8 my-10 border border-pink-700 rounded-lg bg-pink-900 text-richblack-5 flex gap-5">
+			<div className=" w-14 h-14 aspect-square flex items-center justify-center bg-pink-700 rounded-full ">
+				<FiTrash2 className="text-3xl text-pink-200" />
 			</div>
-		
+			<div className="w-[80%] sm:w-[45%] space-y-2">
+				<h2 className="text-lg font-semibold">Delete Account</h2>
+				<p className="text-pink-25">Would you like to delete account?</p>
+				<p className="text-md text-pink-25">
+					This account contains Paid Courses. Deleting your account will remove
+					all the contain associated with it.
+				</p>
+				<button
+					onClick={handleDeleteAccount}
+					className="w-fit cursor-pointer text-pink-300 text-lg text-left italic"
+				>
+					I want to delete my account.
+				</button>
+			</div>
+			{confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+		</div>
 	);
 }
 

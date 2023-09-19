@@ -17,7 +17,7 @@ function RenderCartCourses() {
 			{cart.map((course, index) => (
 				<div
 					key={index}
-					className={`flex w-full items-start justify-between gap-6 ${
+					className={`w-full flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-6 ${
 						index !== 0 && "mt-8"
 					} ${
 						index !== cart.length - 1 && "border-b border-b-richblack-700 pb-8"
@@ -53,7 +53,7 @@ function RenderCartCourses() {
 						</div>
 					</div>
 
-					<div className="flex flex-col items-end space-y-4">
+					<div className="flex flex-col-reverse items-center sm:flex-col sm:items-end gap-y-2 sm:gap-y-4">
 						<button
 							onClick={() => dispatch(removeFromCart(course._id))}
 							className="flex items-center gap-x-1 bg-richblack-700 rounded-md border border-richblack-600 px-3 py-2 text-pink-200"
@@ -62,7 +62,7 @@ function RenderCartCourses() {
 							<span>Remove</span>
 						</button>
 
-						<p className="mb-6 text-3xl font-medium text-yellow-100">
+						<p className="sm:mb-6 text-3xl font-medium text-yellow-100">
 							₹ {course?.price}
 						</p>
 					</div>

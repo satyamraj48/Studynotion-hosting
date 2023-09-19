@@ -19,12 +19,12 @@ function Dashboard() {
 	}
 
 	return (
-		<div className="w-full min-h-[calc(100vh-3.5rem)] flex">
+		<div className="w-full min-h-[calc(100vh-3.5rem)] fle">
 			{/* Sidebar */}
 			<Sidebar />
 
 			{/* nested route for dashboard */}
-			<div className=" h-[calc(100vh-3.5rem)] overflow-auto flex-1">
+			<div className=" mt-2 h-[calc(100vh-3.5rem)] overflow-auto">
 				<Outlet />
 			</div>
 		</div>

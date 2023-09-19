@@ -24,13 +24,10 @@ function RenderSteps() {
 	const { step } = useSelector((state) => state.course);
 	return (
 		<>
-			<div className="mb-5 relative w-full flex justify-center gap-28 ">
+			<div className="mb-5 relative flex justify-center ">
 				{steps.map((item) => (
-					<>
-						<div
-							key={item.id}
-							className="flex flex-col items-center space-y-1 text-richblack-5 "
-						>
+					<div key={item.id} className="flex text-richblack-5 ">
+						<div className="bg-pink-30 min-h-[80px] flex flex-col items-center space-y-1  ">
 							<button
 								className={`${
 									step === item.id
@@ -56,20 +53,17 @@ function RenderSteps() {
 								{item.title}
 							</p>
 						</div>
-
 						{/* dashed line in middle */}
 						{item.id < steps.length && (
 							<div
-								className={`h-[calc(34px/2)] w-[33%] border-dashed border-b-2 absolute ${
-									item.id === 1 && "left-28"
-								} ${item.id === 2 && "right-20"} ${
+								className={`bg-pink-10 w-[10px] sm:w-[100px] h-[16px] border-b border-dashed ${
 									step > item.id
 										? "bg-pink-20 border-yellow-50"
-										: "border-richblack-500"
+										: "border-richblack-50"
 								}`}
 							></div>
 						)}
-					</>
+					</div>
 				))}
 			</div>
 

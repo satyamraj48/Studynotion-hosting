@@ -17,7 +17,6 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { COURSE_STATUS } from "../../../../utils/constants";
 
 function CoursesTable({ courses, setCourses }) {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { token } = useSelector((state) => state.auth);
 	const [loading, setLoading] = useState(false);
@@ -47,7 +46,7 @@ function CoursesTable({ courses, setCourses }) {
 						<Th>Actions</Th>
 					</Tr>
 				</Thead>
-				<Tbody className="space-y-6">
+				<Tbody className="space-y-16 sm:space-y-8">
 					{courses?.map((course) => (
 						<Tr
 							key={course._id}

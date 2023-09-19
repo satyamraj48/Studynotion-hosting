@@ -61,11 +61,11 @@ function InstructorDashboard() {
 					</div>
 
 					{/* courses */}
-					{!courses.length > 0 ? (
+					{courses.length > 0 ? (
 						<>
-							<div className="h-[550px] lg:h-[600px] flex gap-6">
+							<div className="h-fit lg:h-[550px] xl:h-[600px] flex flex-col lg:flex-row gap-6">
 								{totalAmount > 0 || totalStudents > 0 ? (
-										<InstructorChart instructorData={instructorData} />
+									<InstructorChart instructorData={instructorData} />
 								) : (
 									<div className="flex-1 bg-richblack-800 rounded-lg p-6 text-xl text-richblack-50">
 										Not Enough Data To Visualize
@@ -77,15 +77,21 @@ function InstructorDashboard() {
 									<p className="text-lg font-semibold">Statistics</p>
 									<div className="">
 										<p className="text-lg text-richblack-200">Total Courses</p>
-										<p className="text-3xl font-semibold text-richblack-50">{courses.length}</p>
+										<p className="text-3xl font-semibold text-richblack-50">
+											{courses.length}
+										</p>
 									</div>
 									<div>
 										<p className="text-lg text-richblack-200">Total Students</p>
-										<p className="text-3xl font-semibold text-richblack-50">{totalStudents}</p>
+										<p className="text-3xl font-semibold text-richblack-50">
+											{totalStudents}
+										</p>
 									</div>
 									<div>
 										<p className="text-lg text-richblack-200">Total Income</p>
-										<p className="text-3xl font-semibold text-richblack-50">₹{totalAmount}</p>
+										<p className="text-3xl font-semibold text-richblack-50">
+											₹{totalAmount}
+										</p>
 									</div>
 								</div>
 							</div>
@@ -102,13 +108,16 @@ function InstructorDashboard() {
 								</div>
 
 								{/* course card */}
-								<div className="my-6 mx-2 flex items-center gap-6">
+								<div className="my-6 mx-2 flex flex-wrap items-center gap-6">
 									{courses?.slice(0, 3).map((course, index) => (
-										<div key={index} className="w-1/3 flex flex-col gap-1">
+										<div
+											key={index}
+											className="w-full sm:w-1/3 flex flex-col gap-1"
+										>
 											<img
 												src={course.thumbnail}
 												alt={course.courseName}
-												className="w-full h-[140px] xl:h-[170px] aspect-video rounded-lg object-cover"
+												className="w-full h-[200px] sm:h-[150px] xl:h-[170px] aspect-video rounded-lg object-cover"
 											/>
 											<div>
 												<p className="text-sm font-semibold text-richblack-50">
@@ -126,7 +135,9 @@ function InstructorDashboard() {
 						</>
 					) : (
 						<div className="flex flex-col gap-3 items-center bg-richblack-800 rounded-md p-6 py-20">
-							<p className="text-2xl font-bold">You have not created any courses yet</p>
+							<p className="text-2xl font-bold">
+								You have not created any courses yet
+							</p>
 							<Link to="/dashboard/add-course">
 								<button className="yellowButton">Create a Course</button>
 							</Link>

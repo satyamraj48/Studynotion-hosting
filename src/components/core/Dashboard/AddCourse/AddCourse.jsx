@@ -17,7 +17,7 @@ function AddCourse() {
 		<div className="w-11/12 max-w-[1400px] mx-auto text-richblack-5 py-10 tracking-normal">
 			<h1 className="mb-14 text-3xl font-medium ">Add Course</h1>
 			<div className="flex flex-col items-center lg:flex-row gap-x-20 gap-y-10">
-				<div className="flex-1">
+				<div className="w-[350px] sm:w-full flex-1">
 					<RenderSteps />
 				</div>
 				<div className="max-w-[400px] sticky top-10 hidden flex-1 bg-richblack-800 border border-richblack-700 rounded-lg p-6 xl:block">

@@ -20,7 +20,7 @@ function Course_Card({ course }) {
 					<img
 						src={course?.thumbnail}
 						alt="Course Thumbnail"
-						className="w-full h-[350px] rounded-lg object-cover"
+						className="h-[200px] aspect-video md:w-full md:aspect-video sm:h-[350px] rounded-lg object-cover"
 					/>
 					<p className="mt-2 text-xl capitalize">{course?.courseName}</p>
 				</Link>

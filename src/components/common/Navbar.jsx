@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavbarLinks } from "../../data/navbar-links";
-import { Link, useLocation, matchPath, Navigate } from "react-router-dom";
+import { Link, useLocation, matchPath } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { useSelector } from "react-redux";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -8,10 +8,8 @@ import { IoIosArrowDown } from "react-icons/io";
 import ProfileDropDown from "../core/Dashboard/ProfileDropDown";
 import { apiconnector } from "../../services/apiconnector";
 import { categories } from "../../services/apis";
-import { FcMenu } from "react-icons/fc";
-import { useRef } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import { useLayoutEffect } from "react";
+import { CgMenuGridR } from "react-icons/cg";
 
 function Navbar({ setMenuRoot }) {
 	const { token } = useSelector((state) => state.auth);
@@ -21,7 +19,7 @@ function Navbar({ setMenuRoot }) {
 	const [subLinks, setSubLinks] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [menu, setMenu] = useState(false);
-	const [tabMenu, setTabMenu] = useState(true);
+	const [tabMenu, setTabMenu] = useState(false);
 
 	const location = useLocation();
 
@@ -48,17 +46,9 @@ function Navbar({ setMenuRoot }) {
 	};
 
 	//window width
-	const ref1 = useRef(null);
-	const [width, setWidth] = useState(0);
-	useLayoutEffect(() => {
-		// setWidth(ref1.current.offsetWidth);
-		getWindowSize();
-		getWindowSize();
-	}, []);
-
 	const getWindowSize = () => {
-		setWidth(ref1.current.offsetWidth);
-		if (width >= 768) {
+		const pageWidth = window.matchMedia("(min-width: 768px)");
+		if (pageWidth.matches) {
 			setTabMenu(true);
 			setMenu(false);
 		} else {
@@ -70,6 +60,7 @@ function Navbar({ setMenuRoot }) {
 	//category fetch
 	useEffect(() => {
 		fetchSubLinks();
+		getWindowSize();
 	}, []);
 
 	return (
@@ -77,7 +68,6 @@ function Navbar({ setMenuRoot }) {
 			className={`w-full h-14 flex items-center justify-center ${
 				location.pathname !== "/" && "bg-richblack-800"
 			} border-b border-richblack-700 text-richblack-25 transition-all duration-200`}
-			ref={ref1}
 		>
 			<div className="relative flex w-11/12 max-w-maxContent items-center justify-between gap-x-8">
 				{/* Logo */}{" "}
@@ -90,98 +80,81 @@ function Navbar({ setMenuRoot }) {
 						loading="lazy"
 					/>
 				</Link>
-				{/* <p className="text-richblack-5">
-					Hello -{tabMenu ? "1" : "0"}
-					jee- {menu ? "1" : "0"}
-				</p> */}
 				{/* Navigation links */}
-				{/* menu button for small screen */}
-				<button
-					className="flex md:hidden z-[2001]"
-					onMouseOver={() => {
-						setMenu(true);
+				<div
+					className={`text-sm bg-richblack-700 rounded-md px-7 py-4 absolute top-12 -right-1 md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500 transition-all duration-300 ${
+						menu && "animate-[bounce_0.1s_ease-in_1]"
+					} ${
+						tabMenu || menu ? "visible opacity-100" : "invisible opacity-0"
+					} `}
+					onMouseLeave={() => {
+						setMenu(false);
+						// setMenuRoot(menu);
 					}}
-					onClick={() => {
-						setMenu(true);
-					}}
+					ref={ref}
 				>
-					<FcMenu className="text-3xl" />
-				</button>
-				{true && (
-					<div
-						className={`text-sm bg-richblack-700 rounded-md px-4 py-2 absolute top-14 inset-x-[5%] sm:inset-x-[10%] md:text-[16px] md:static md:bg-transparent md:shadow-none z-[1000] shadow-sm shadow-richblack-500 ${
-							tabMenu ? "block" : menu ? "block" : "hidden"
-						} `}
-						onMouseLeave={() => {
-							setMenu(false);
-							// setMenuRoot(menu);
-						}}
-						ref={ref}
-					>
-						{/* {width}px */}
-						<ul className="flex items-center justify-evenly gap-x-4 md:gap-x-6 text-richblack-25">
-							{NavbarLinks.map((elem, i) => (
-								<li key={i}>
-									{elem.title === "Catalog" ? (
-										<div
-											className={`relative flex items-center cursor-pointer gap-1 group ${
+					<ul className="flex flex-col items-start md:flex-row md:items-center md:justify-evenly gap-4 md:gap-6 text-richblack-25">
+						{NavbarLinks.map((elem, i) => (
+							<li key={i}>
+								{elem.title === "Catalog" ? (
+									<div
+										className={`relative flex items-center cursor-pointer gap-1 group ${
+											routeMatch(elem?.path)
+												? "text-yellow-25"
+												: "text-richblack-25"
+										}`}
+									>
+										<p>{elem.title}</p>
+
+										<IoIosArrowDown />
+
+										<div className="absolute w-[140px] md:w-[200px] right-[40%] -top-[300%] md:left-[50%] md:top-[-50%] translate-x-[-50%] translate-y-[3em] flex flex-col bg-richblack-5 md:bg-richblack-5 p-2 text-blue-400 md:text-richblack-900 opacity-0 transition-all duration-150 font-medium rounded-md invisible z-[3000] group-hover:opacity-100 group-hover:visible group-hover:translate-y-[3em]">
+											<div className="absolute left-[75%] top-[20%] md:left-[50%] md:top-0 translate-y-[-40%] translate-x-[80%] h-6 w-6 rotate-45 rounded select-none bg-richblack-5 "></div>
+											{loading ? (
+												<p className="text-center">Loading...</p>
+											) : (
+												<>
+													{subLinks.length > 0 ? (
+														subLinks.map((sublink, index) => (
+															<Link
+																to={`/catalog/${sublink.name
+																	.split(" ")
+																	.join("-")
+																	.toLowerCase()}`}
+																key={index}
+																className={`transition-all duration-150 bg-transparent hover:bg-richblack-50 rounded-lg pl-4 py-3 pr-2 `}
+															>
+																<p onClick={() => setMenu(false)}>
+																	{sublink.name}
+																</p>
+															</Link>
+														))
+													) : (
+														<p className="text-center">No Courses Found</p>
+													)}
+												</>
+											)}
+										</div>
+									</div>
+								) : (
+									<Link to={elem?.path}>
+										<p
+											className={`${
 												routeMatch(elem?.path)
 													? "text-yellow-25"
 													: "text-richblack-25"
-											}`}
+											} text-center active:text-yellow-25 `}
+											onClick={() => setMenu(false)}
 										>
-											<p>{elem.title}</p>
-
-											<IoIosArrowDown />
-
-											<div className="absolute w-[200px] left-[50%] top-[-50%] z-[1000] translate-x-[-50%] translate-y-[3em] flex flex-col bg-richblack-5 p-2 text-richblack-900 opacity-0 transition-all duration-150 font-medium rounded-lg invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-[3em]">
-												<div className="absolute left-[50%] top-0 translate-y-[-40%] translate-x-[80%] h-6 w-6 rotate-45 rounded select-none bg-richblack-5 -z-10"></div>
-												{loading ? (
-													<p className="text-center">Loading...</p>
-												) : (
-													<>
-														{subLinks.length > 0 ? (
-															subLinks.map((sublink, index) => (
-																<Link
-																	to={`/catalog/${sublink.name
-																		.split(" ")
-																		.join("-")
-																		.toLowerCase()}`}
-																	key={index}
-																	className={`transition-all duration-150 bg-transparent hover:bg-richblack-50 rounded-lg pl-4 py-3 pr-2 `}
-																>
-																	<p onClick={() => setMenu(false)}>
-																		{sublink.name}
-																	</p>
-																</Link>
-															))
-														) : (
-															<p className="text-center">No Courses Found</p>
-														)}
-													</>
-												)}
-											</div>
-										</div>
-									) : (
-										<Link to={elem?.path}>
-											<p
-												className={`${
-													routeMatch(elem?.path)
-														? "text-yellow-25"
-														: "text-richblack-25"
-												} text-center active:text-yellow-25 `}
-												onClick={() => setMenu(false)}
-											>
-												{elem.title}
-											</p>
-										</Link>
-									)}
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
-				{/* Login SignUp Dashboard */}
+											{elem.title}
+										</p>
+									</Link>
+								)}
+							</li>
+						))}
+					</ul>
+				</div>
+				{/* Login SignUp NavMenu Dashboard */}
 				<div className="flex items-center gap-x-5">
 					{user && user?.accountType !== "Instructor" && (
 						<Link to="/dashboard/cart">
@@ -218,6 +191,18 @@ function Navbar({ setMenuRoot }) {
 							<ProfileDropDown />
 						</div>
 					)}
+					{/* menu button for small screen */}
+					<button
+						className="flex md:hidden z-[2001]"
+						onMouseOver={() => {
+							setMenu(true);
+						}}
+						onClick={() => {
+							setMenu(true);
+						}}
+					>
+						<CgMenuGridR className="text-richblack-100 text-2xl" />
+					</button>
 				</div>
 			</div>
 		</div>

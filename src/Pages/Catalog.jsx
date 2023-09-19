@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
 import Footer from "../components/common/Footer";
 import { apiconnector } from "../services/apiconnector";
@@ -9,6 +9,7 @@ import { categories } from "../services/apis";
 import CourseSlider from "../components/core/CatalogPage/CourseSlider";
 import Course_Card from "../components/core/CatalogPage/Course_Card";
 import Error from "./Error";
+import { BiLeftArrowAlt } from "react-icons/bi";
 
 function Catalog() {
 	const { catalogName } = useParams();
@@ -16,6 +17,7 @@ function Catalog() {
 	const [catalogPageData, setCatalogpageData] = useState([]);
 	const [categoryId, setCategoryId] = useState(null);
 	const [active, setActive] = useState(1);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		//fetch all categories
@@ -61,7 +63,13 @@ function Catalog() {
 
 	return (
 		<div className="w-full box-content bg-richblack-900 px-4 text-richblack-5">
-			<div className="px-40 mx-auto min-h-[260px] max-w-maxContent items-start lg:max-w-maxContent bg-richblack-800 rounded-b-3xl flex flex-col justify-center gap-4">
+			<div
+				className="absolute top-16 left-3 text-2xl bg-richblack-600 hover:bg-richblack-700 rounded-full"
+				onClick={() => navigate(-1)}
+			>
+				<BiLeftArrowAlt />
+			</div>
+			<div className="sm:px-40 px-4 mx-auto min-h-[260px] max-w-maxContent items-start lg:max-w-maxContent bg-richblack-800 rounded-b-3xl flex flex-col justify-center gap-4">
 				<p className="text-richblack-300 text-sm capitalize">
 					{`
 					Home / Catalog / `}
@@ -78,7 +86,7 @@ function Catalog() {
 			</div>
 
 			{/* section 1 */}
-			{/* course to get startes */}
+			{/* courses to get you started */}
 			<div className=" mx-auto w-full box-content max-w-maxContentTab lg:max-w-maxContent px-4 py-12 ">
 				<p className="section_heading">Courses to get you started</p>
 				<div

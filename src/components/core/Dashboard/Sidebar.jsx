@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../../services/operations/authAPI";
 import { VscSignOut } from "react-icons/vsc";
 import ConfirmationModal from "../../common/ConfirmationModal";
+import { FcMenu } from "react-icons/fc";
+import { RxCross2 } from "react-icons/rx";
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import { useRef } from "react";
 
 function Sidebar() {
 	const { user, loading: profileLoading } = useSelector(
@@ -15,6 +19,14 @@ function Sidebar() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [confirmationModal, setConfirmationModal] = useState(null);
+	const [sidebar, setSidebar] = useState(false);
+	const [sidebarBtn, setSidebarBtn] = useState(true);
+
+	const ref = useRef();
+	useOnClickOutside(ref, () => {
+		setSidebarBtn(true);
+		setSidebar(false);
+	});
 
 	if (authLoading || profileLoading) {
 		return (
@@ -25,8 +37,41 @@ function Sidebar() {
 	}
 
 	return (
-		<>
-			<div className="min-h-[clac(100vh-3.5rem)] bg-richblack-800 min-w-[222px] py-10 px-0 border-r-[1px] border-richblack-700 text-richblack-300 ">
+		<div>
+			<div
+				className={`relative top-1 left-2 z-[11] text-richblack-200`}
+				ref={ref}
+			>
+				{sidebarBtn ? (
+					<button
+						className="hover:scale-95 hover:bg-richblack-700 rounded"
+						onClick={() => {
+							setSidebarBtn(false);
+							setSidebar(true);
+						}}
+					>
+						<FcMenu className="text-3xl" />
+					</button>
+				) : (
+					<button
+						className="hover:scale-95 hover:bg-richblack-700 rounded-full"
+						onClick={() => {
+							setSidebarBtn(true);
+							setSidebar(false);
+						}}
+					>
+						<RxCross2 className="text-3xl" />
+					</button>
+				)}
+			</div>
+			<div
+				className={`absolute top-14 min-h-[calc(100vh-3.5rem)] bg-richblack-800 sm:min-w-[180px] md:min-w-[222px] py-12 px-0 border-r-[1px] border-b-[1px] border-richblack-700 text-richblack-300 transition-all duration-1000 z-[10] ${
+					sidebar
+						? "visible opacity-100 translate-x-[0%] "
+						: "invisible opacity-0 translate-x-[-100%]"
+				} `}
+				// ref={ref}
+			>
 				<div className="flex flex-col">
 					{sidebarLinks.map((elem) => {
 						if (elem.type && elem.type !== user?.accountType) return null;
@@ -67,8 +112,10 @@ function Sidebar() {
 					</button>
 				</div>
 			</div>
-			{confirmationModal !== null && <ConfirmationModal modalData={confirmationModal} />}
-		</>
+			{confirmationModal !== null && (
+				<ConfirmationModal modalData={confirmationModal} />
+			)}
+		</div>
 	);
 }
 

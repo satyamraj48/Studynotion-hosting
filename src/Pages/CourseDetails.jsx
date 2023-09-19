@@ -11,7 +11,7 @@ import ConfirmationModal from "../components/common/ConfirmationModal";
 import RatingStars from "../components/common/RatingStars";
 import { formatDate } from "../services/formatDate";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
-import { BiInfoCircle } from "react-icons/bi";
+import { BiInfoCircle, BiLeftArrowAlt } from "react-icons/bi";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import Footer from "../components/common/Footer";
 import CourseAccordionBar from "../components/core/Course/CourseAccordionBar";
@@ -138,7 +138,8 @@ function CourseDetails() {
 			<div className="relative w-full bg-richblack-800 rounded-b-xl text-richblack-5">
 				{/* Hero Section */}
 				<div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative ">
-					<div className="mx-auto grid min-h-[400px]max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[810px] ">
+					<div className="absolute top-2 text-2xl bg-richblack-600 hover:bg-richblack-700 rounded-full" onClick={()=>navigate(-1)}><BiLeftArrowAlt/></div>
+					<div className="mt-4 mx-auto grid min-h-[400px]max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[810px] ">
 						<div className="relative block max-h-[30rem] lg:hidden ">
 							<div className="absolute left-0 bottom-0 w-full h-full shadow-[0px_-70px_36px_-28px_#161D29_inset] "></div>
 							<img

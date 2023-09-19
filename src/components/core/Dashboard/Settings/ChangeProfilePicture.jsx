@@ -59,8 +59,8 @@ function ChangeProfilePicture() {
 			/>
 
 			<div className="space-y-2">
-				<p>Change Profile Picture</p>
-				<div className="flex items-center gap-3">
+				<p className="font-semibold">Change Profile Picture</p>
+				<div className="flex flex-col sm:flex-row sm:items-center gap-3">
 					<input
 						type="file"
 						ref={fileInputRef}
@@ -78,16 +78,14 @@ function ChangeProfilePicture() {
 
 					<button
 						onClick={handleFileUpload}
-						className="bg-yellow-50 text-richblack-900 font-semibold px-5 py-2 rounded-lg"
+						className="flex items-center justify-center gap-1 bg-yellow-50 text-richblack-900 font-semibold px-5 py-2 rounded-lg"
 					>
-						<div className="flex items-center gap-1">
-							{loading ? "Uploading..." : "Upload"}
-							<CgSoftwareUpload
-								className={`text-xl ${
-									loading && " animate-[bounce_3s_ease-in_infinite] "
-								}`}
-							/>
-						</div>
+						{loading ? "Uploading..." : "Upload"}
+						<CgSoftwareUpload
+							className={`text-xl ${
+								loading && " animate-[bounce_3s_ease-in_infinite] "
+							}`}
+						/>
 					</button>
 				</div>
 			</div>
