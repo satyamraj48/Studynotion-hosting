@@ -108,8 +108,8 @@ function Navbar({ setMenuRoot }) {
 
 										<IoIosArrowDown />
 
-										<div className="absolute w-[140px] md:w-[200px] right-[40%] -top-[300%] md:left-[50%] md:top-[-50%] translate-x-[-50%] translate-y-[3em] flex flex-col bg-richblack-5 md:bg-richblack-5 p-2 text-blue-400 md:text-richblack-900 opacity-0 transition-all duration-150 font-medium rounded-md invisible z-[3000] group-hover:opacity-100 group-hover:visible group-hover:translate-y-[3em]">
-											<div className="absolute left-[75%] top-[20%] md:left-[50%] md:top-0 translate-y-[-40%] translate-x-[80%] h-6 w-6 rotate-45 rounded select-none bg-richblack-5 "></div>
+										<div className="absolute w-[140px] md:w-[200px] right-[40%] -top-[300%] md:left-[50%] md:top-[-50%] translate-x-[-50%] translate-y-[3em] flex flex-col bg-richblack-5 md:bg-richblack-5 p-2 text-blue-800 md:text-richblack-900 opacity-0 transition-all duration-150 font-medium rounded-md invisible z-[3000] group-hover:opacity-100 group-hover:visible group-hover:translate-y-[3em]">
+											<div className="absolute left-[75%] top-[19%] rotate-90 md:rotate-0 md:left-[47%] md:top-[-5%] translate-y-[-40%] translate-x-[80%] h-0 w-0 border-l-[14px] border-r-[14px] border-b-[14px] border-transparent border-b-richblack-5 select-none z-[2000]"></div>
 											{loading ? (
 												<p className="text-center">Loading...</p>
 											) : (

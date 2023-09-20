@@ -197,7 +197,6 @@ const App = () => {
 				<Route path="/catalog/:catalogName" element={<Catalog />} />
 				{/* course routes */}
 				<Route path="/course/:courseId" element={<CourseDetails />} />
-
 				<Route path="*" element={<Error />} />
 			</Routes>
 		</div>
