@@ -56,7 +56,7 @@ exports.sendOTP = async (req, res) => {
 			message: "OTP Sent Successfully",
 		});
 	} catch (error) {
-		console.log("Error in sending OTP for Verification at Auth ---> ", error);
+		// console.log("Error in sending OTP for Verification at Auth ---> ", error);
 		return res.status(401).json({
 			success: false,
 			message: "Error in sending OTP",
