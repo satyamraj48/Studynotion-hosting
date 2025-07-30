@@ -24,7 +24,10 @@ exports.resetPasswordToken = async (req, res) => {
 		const token = crypto.randomUUID();
 		const updatedUser = await User.findOneAndUpdate(
 			{ email },
-			{ token: token, resetPasswordExpires: Date.now() + 5 * 60 * 1000 },
+			{
+				token: token,
+				resetPasswordExpires: Date.now() + 5 * 60 * 1000,
+			},
 			{ new: true }
 		);
 		//create url
@@ -32,7 +35,7 @@ exports.resetPasswordToken = async (req, res) => {
 		await mailSender(
 			email,
 			"Password Reset Link",
-			`Password Reset Link : <a href=${url}>${url}</a>`
+			`Password Reset Link : <a href=${url}>Reset Password</a>`
 		);
 		return res.json({
 			success: true,
@@ -53,35 +56,44 @@ exports.resetPasswordToken = async (req, res) => {
 exports.resetPassword = async (req, res) => {
 	try {
 		const { password, confirmPassword, token } = req.body;
+
+		if (!token && !password && !confirmPassword) {
+			return res.status(400).json({
+				success: false,
+				message: "Required",
+			});
+		}
+
 		if (password !== confirmPassword) {
-			return res.json({
+			return res.status(400).json({
 				success: false,
 				message: "Passwords not matching",
 			});
 		}
-		const user = await User.findOne({ token: token });
+		// console.log("token---> ", token);
+		const user = await User.findOne({ token });
+
 		if (!user) {
-			return res.json({
+			return res.status(403).json({
 				success: false,
 				message: "Token is invalid",
 			});
 		}
-		console.log("User->  ", user);
-		console.log(user.resetPasswordExpires);
+		// console.log("User->  ", user);
 		if (user.resetPasswordExpires < Date.now()) {
 			return res.status(403).json({
 				success: false,
 				message: "Link is expired, Please resend the email  ",
 			});
 		}
-		console.log(password);
+
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const updatedUser = await User.findOneAndUpdate(
-			{ token:token },
+			{ token: token },
 			{ password: hashedPassword },
 			{ new: true }
 		);
-		console.log("UP->  ", updatedUser);
+		// console.log("UpdatedUser->  ", updatedUser);
 		return res.status(200).json({
 			success: true,
 			message: "Password Resetted Successfully",

@@ -5,6 +5,7 @@ const Profile = require("../models/Profile");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
+const otpTemplate = require("../mail/templates/emailVerificationTemplate");
 const signUpTemplate = require("../mail/templates/accountSignUpEmail");
 require("dotenv").config();
 
@@ -39,16 +40,23 @@ exports.sendOTP = async (req, res) => {
 			result = await OTP.findOne({ otp: otp });
 		}
 
-		const otpPayload = { email, otp };
 		//create entry in DB
+		const otpPayload = { email, otp };
 		const otpBody = await OTP.create(otpPayload);
 		// console.log("otpBody-> ",otpBody);
+
+		await mailSender(
+			email,
+			"Verification Email from StudyNotion",
+			otpTemplate(otp)
+		);
+
 		return res.status(200).json({
 			success: true,
 			message: "OTP Sent Successfully",
 		});
 	} catch (error) {
-		console.log(error);
+		console.log("Error in sending OTP for Verification at Auth ---> ", error);
 		return res.status(401).json({
 			success: false,
 			message: "Error in sending OTP",
@@ -79,7 +87,7 @@ exports.signUp = async (req, res) => {
 		) {
 			return res.status(403).json({
 				success: false,
-				message: "All field are required",
+				message: "All fields are required",
 			});
 		}
 		if (password !== confirmPassword) {
@@ -122,6 +130,7 @@ exports.signUp = async (req, res) => {
 			dateOfBirth: null,
 			about: null,
 			contactNumber: null,
+			image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 		});
 		const user = await User.create({
 			firstName,
@@ -130,7 +139,6 @@ exports.signUp = async (req, res) => {
 			password: hashedPassword,
 			accountType,
 			additionalDetails: profileDetails._id,
-			image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 		});
 		return res.status(200).json({
 			success: true,
@@ -270,6 +278,7 @@ exports.login = async (req, res) => {
 			});
 		}
 		const user = await User.findOne({ email }).populate("additionalDetails");
+		// console.log("User----> ", user);
 		if (!user) {
 			return res.status(401).json({
 				success: false,

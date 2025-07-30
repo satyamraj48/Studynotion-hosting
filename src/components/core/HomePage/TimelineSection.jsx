@@ -41,7 +41,7 @@ function TimelineSection() {
 						>
 							<div className="flex items-center gap-x-6">
 								<div className="h-[56px] aspect-square shadow-[0px_0px_60px_0px_#0000001F] bg-white flex items-center justify-center rounded-full relative z-10 ">
-									<img src={elem.Logo} className="" />
+									<img src={elem.Logo} alt="" className="" />
 								</div>
 								<div>
 									<h2 className="font-semibold text-lg">{elem.Heading}</h2>

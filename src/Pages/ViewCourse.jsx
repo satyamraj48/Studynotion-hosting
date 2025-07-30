@@ -32,7 +32,7 @@ function ViewCourse() {
 			}
 		};
 		setCourseSpecificDetails();
-	}, []);
+	}, [courseId, dispatch, token]);
 
 	return (
 		<>

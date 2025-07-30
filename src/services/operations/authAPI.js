@@ -23,7 +23,7 @@ export function sendOtp(email, navigate) {
 				email,
 			});
 
-			// console.log("SEND OTP API RESPONSE.........", response);
+			console.log("SEND OTP API RESPONSE.........", response);
 
 			if (!response.data.success) {
 				throw new Error(response.data.message);
@@ -217,8 +217,8 @@ export function resetPassword(password, confirmPassword, token, navigate) {
 			toast.success("Password Reset Successfully");
 			navigate("/login");
 		} catch (error) {
-			console.log("RESETTING PASSWORD ERROR....", error);
 			toast.error(error.response.data.message);
+			console.log("RESETTING PASSWORD ERROR.... ", error.response.data.message);
 		}
 		toast.dismiss(toastId);
 		dispatch(setLoading(false));

@@ -4,6 +4,9 @@ const profileSchema = new mongoose.Schema({
 	gender: {
 		type: String,
 	},
+	image: {
+		type: String,
+	},
 	dateOfBirth: {
 		type: String,
 	},

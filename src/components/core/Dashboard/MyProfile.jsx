@@ -16,7 +16,7 @@ function MyProfile() {
 				<div className=" px-12 py-5 sm:py-8 bg-richblack-800 rounded-lg my-10 flex flex-col items-end sm:flex-row sm:items-center sm:justify-between gap-6 border border-richblack-700 ">
 					<div className="flex items-center gap-5">
 						<img
-							src={user?.image}
+							src={user?.additionalDetails?.image}
 							alt={`Profile ${user?.firstName}`}
 							className="aspect-square rounded-full object-cover w-[78px] "
 						/>

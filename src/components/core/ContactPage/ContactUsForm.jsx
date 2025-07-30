@@ -22,14 +22,14 @@ function ContactUsForm() {
 				lastName: "",
 				message: "",
 				phoneNo: "",
-				CountryCode:"",
+				CountryCode: "",
 			});
 		}
 	}, [reset, isSubmitSuccessful]);
 
 	const submitContactForm = async (data) => {
 		console.log("Logging Data-> ", data);
-		const toastId = toast.loading("Sending...")
+		const toastId = toast.loading("Sending...");
 		try {
 			setLoading(true);
 			const response = await apiconnector(
@@ -54,7 +54,9 @@ function ContactUsForm() {
 			<div className="flex gap-2 justify-between">
 				{/* firstname */}
 				<div className="w-[48%] flex flex-col gap-1">
-					<label htmlFor="firstName" className="text-sm">First Name</label>
+					<label htmlFor="firstName" className="text-sm">
+						First Name
+					</label>
 					<input
 						type="text"
 						name="firstName"
@@ -70,7 +72,9 @@ function ContactUsForm() {
 
 				{/* lastname */}
 				<div className="w-[48%] flex flex-col gap-1">
-					<label htmlFor="lastName" className="text-sm">Last Name</label>
+					<label htmlFor="lastName" className="text-sm">
+						Last Name
+					</label>
 					<input
 						type="text"
 						name="lastName"
@@ -84,7 +88,9 @@ function ContactUsForm() {
 
 			{/* email */}
 			<div className="flex flex-col gap-1 mt-4">
-				<label htmlFor="email" className="text-sm">Email</label>
+				<label htmlFor="email" className="text-sm">
+					Email
+				</label>
 				<input
 					type="email"
 					name="email"
@@ -100,13 +106,15 @@ function ContactUsForm() {
 
 			{/* phoneno */}
 			<div className="flex flex-col gap-1 mt-4">
-				<label htmlFor="phoneNo" className="text-sm">Phone Number</label>
+				<label htmlFor="phoneNo" className="text-sm">
+					Phone Number
+				</label>
 				<div className="flex gap-6 justify-between">
 					<div className=" w-[17%] form-style ">
 						<select
 							name="dropdown"
 							id="dropdown"
-							className="bg-richblack-700 text-richblack-100 w-full outline-0"
+							className="bg-richblack-700 text-richblack-100 w-full outline-none rounded-none"
 							{...register("countryCode", { required: true })}
 						>
 							{CountryCode.map((elem, index) => (
@@ -139,7 +147,9 @@ function ContactUsForm() {
 
 			{/* message */}
 			<div className="flex flex-col gap-1 mt-4">
-				<label htmlFor="message" className="text-sm">Message</label>
+				<label htmlFor="message" className="text-sm">
+					Message
+				</label>
 				<textarea
 					name="message"
 					id="message"

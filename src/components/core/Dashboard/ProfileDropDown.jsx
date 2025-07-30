@@ -25,7 +25,7 @@ function ProfileDropDown() {
 					className="flex items-center gap-1 cursor-pointer transition-all duration-200 hover:bg-richblack-700 p-2 rounded-full" 
 			>
 				<img
-					src={user?.image}
+					src={user?.additionalDetails?.image}
 					alt="Profile-Image"
 					className="rounded-full aspect-square w-[30px] object-cover "
 				/>

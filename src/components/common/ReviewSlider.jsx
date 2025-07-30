@@ -46,7 +46,7 @@ function ReviewSlider() {
 						<div className="flex flex-col gap-3 bg-richblack-800 rounded-lg px-6 py-3 text-sm">
 							<div className="flex items-center gap-4">
 								<img
-									src={review?.user?.image ?? ""}
+									src={review?.user?.additionalDetails?.image ?? ""}
 									alt="User Image"
 									className="w-9 h-9 rounded-full object-cover"
 								/>

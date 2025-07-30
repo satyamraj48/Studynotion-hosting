@@ -11,7 +11,7 @@ function CourseAccordionBar({ course, isActive, handleActive }) {
 	const [active, setActive] = useState(false);
 	useEffect(() => {
 		setActive(isActive?.includes(course._id));
-	}, [isActive]);
+	}, [isActive, course._id]);
 
 	const [sectionHeight, setSectionHeight] = useState(0);
 	useEffect(() => {

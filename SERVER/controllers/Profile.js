@@ -27,10 +27,9 @@ exports.updateProfile = async (req, res) => {
 
 		userDetails.firstName = firstName;
 		userDetails.lastName = lastName;
-		if (userDetails.image.includes("api.dicebear.com"))
-			userDetails.image = `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`; //TODO check for manual upload dp
-		//save in db
-		await userDetails.save();
+		if (profileDetails.image.includes("api.dicebear.com"))
+			profileDetails.image = `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`; //TODO check for manual upload dp
+
 		profileDetails.gender = gender;
 		profileDetails.dateOfBirth = dateOfBirth;
 		profileDetails.about = about;
@@ -72,6 +71,7 @@ exports.updateDisplayPicture = async (req, res) => {
 			});
 
 		//upload to cloudinary
+		console.log("displayPicture--> ", displayPicture);
 		const uploadedImage = await uploadImageToCloudinary(
 			displayPicture,
 			process.env.FOLDER_NAME,
@@ -80,11 +80,16 @@ exports.updateDisplayPicture = async (req, res) => {
 		);
 
 		//find profile
-		const updatedUserDetails = await User.findById(userId);
+		const updatedUserDetails = await User.findById(userId)
+			.populate("additionalDetails")
+			.exec();
 
-		updatedUserDetails.image = uploadedImage.secure_url;
+		const profileId = updatedUserDetails.additionalDetails;
+		const updatedProfileDetails = await Profile.findById(profileId);
+
+		updatedProfileDetails.image = uploadedImage?.secure_url;
 		//save in db
-		await updatedUserDetails.save();
+		await updatedProfileDetails.save();
 
 		updatedUserDetails.password = undefined;
 

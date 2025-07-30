@@ -59,7 +59,7 @@ function CourseReviewModal({ setReviewModal }) {
 				<div className="w-full mt-6 flex flex-col items-center">
 					<div className="flex items-center gap-x-3">
 						<img
-							src={user?.image}
+							src={user?.additionalDetails?.image}
 							alt="User Image"
 							className="w-[60px] aspect-square rounded-full"
 						/>

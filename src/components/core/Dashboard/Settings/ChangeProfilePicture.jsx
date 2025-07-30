@@ -41,6 +41,7 @@ function ChangeProfilePicture() {
 		try {
 			setLoading(true);
 			const formData = new FormData();
+			console.log("image file--> ", imageFile);
 			formData.append("displayPicture", imageFile);
 			dispatch(updateDisplayPicture(token, formData)).then(() =>
 				setLoading(false)
@@ -53,7 +54,7 @@ function ChangeProfilePicture() {
 	return (
 		<div className="px-12 py-8 my-10 border border-richblack-700 rounded-lg bg-richblack-800 flex items-center gap-5">
 			<img
-				src={previewSource || user?.image}
+				src={previewSource || user?.additionalDetails?.image}
 				alt="Profile Image"
 				className="aspect-square rounded-full w-[78px]"
 			/>

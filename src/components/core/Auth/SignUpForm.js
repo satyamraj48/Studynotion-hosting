@@ -158,7 +158,7 @@ function SignUpForm() {
 							className="absolute right-3 top-[38px] cursor-pointer z-[10] "
 							onClick={() => setShowPassword((prev) => !prev)}
 						>
-							{showPassword ? <AiOutlineEye fontSize={24} fill="#AFB2BF" /> : <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />}
+							{showPassword ? <AiOutlineEye fontSize={20} fill="#AFB2BF" /> : <AiOutlineEyeInvisible fontSize={20} fill="#AFB2BF" />}
 						</span>
 					</label>
 					<label className="relative">
@@ -179,9 +179,9 @@ function SignUpForm() {
 							onClick={() => setShowConfirmPassword((prev) => !prev)}
 						>
 							{showConfirmPassword ? (
-								<AiOutlineEye fontSize={24} fill="#AFB2BF" />
+								<AiOutlineEye fontSize={20} fill="#AFB2BF" />
 							) : (
-								<AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+								<AiOutlineEyeInvisible fontSize={20} fill="#AFB2BF" />
 							)}
 						</span>
 					</label>
