@@ -34,14 +34,10 @@ function ChangeProfilePicture() {
 	}
 
 	function handleFileUpload() {
-		if (!imageFile) {
-			handleClick();
-			return;
-		}
 		try {
 			setLoading(true);
 			const formData = new FormData();
-			console.log("image file--> ", imageFile);
+			// console.log("image file--> ", imageFile);
 			formData.append("displayPicture", imageFile);
 			dispatch(updateDisplayPicture(token, formData)).then(() =>
 				setLoading(false)
@@ -49,6 +45,8 @@ function ChangeProfilePicture() {
 		} catch (error) {
 			console.log("Error Message.....", error.message);
 		}
+		setImageFile(null);
+		setPreviewSource(null);
 	}
 
 	return (
@@ -69,25 +67,29 @@ function ChangeProfilePicture() {
 						className="hidden"
 						accept="image/png, image/jpg, image/jpeg"
 					/>
-					<button
-						className="bg-richblack-700 text-richblack-50 cursor-pointer font-semibold px-5 py-2 rounded-lg "
-						onClick={handleClick}
-						disabled={loading}
-					>
-						Select
-					</button>
+					{!loading && (
+						<button
+							className="bg-richblack-700 text-richblack-50 cursor-pointer font-semibold px-5 py-2 rounded-lg "
+							onClick={handleClick}
+							disabled={loading}
+						>
+							Select
+						</button>
+					)}
 
-					<button
-						onClick={handleFileUpload}
-						className="flex items-center justify-center gap-1 bg-yellow-50 text-richblack-900 font-semibold px-5 py-2 rounded-lg"
-					>
-						{loading ? "Uploading..." : "Upload"}
-						<CgSoftwareUpload
-							className={`text-xl ${
-								loading && " animate-[bounce_3s_ease-in_infinite] "
-							}`}
-						/>
-					</button>
+					{(imageFile || loading) && (
+						<button
+							onClick={handleFileUpload}
+							className="flex items-center justify-center gap-1 bg-yellow-50 text-richblack-900 font-semibold px-5 py-2 rounded-lg"
+						>
+							{loading ? "Uploading..." : "Upload"}
+							<CgSoftwareUpload
+								className={`text-xl ${
+									loading && " animate-[bounce_3s_ease-in_infinite] "
+								}`}
+							/>
+						</button>
+					)}
 				</div>
 			</div>
 		</div>

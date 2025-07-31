@@ -160,8 +160,8 @@ function CourseDetails() {
 								<span>{course?.studentsEnrolled.length} Students Enrolled</span>
 							</div>
 							<p>
-								Created By {course?.instructor.firstName}{" "}
-								{course?.instructor.lastName}
+								Created By {course?.instructor?.firstName}{" "}
+								{course?.instructor?.lastName}
 							</p>
 							<div className="mt-3 flex flex-wrap gap-5 text-sm text-richblack-50 ">
 								<p className="flex items-center gap-x-2 ">
@@ -258,17 +258,17 @@ function CourseDetails() {
 							<p className="text-[28px] font-semibold ">Author</p>
 							<div className="flex items-center gap-4 py-4">
 								<img
-									src={course.instructor.image}
+									src={course?.instructor?.image}
 									alt="Author"
 									className="w-14 h-14 rounded-full object-cover"
 								/>
 								<div className="space-y-1">
 									<p className="text-lg">
-										{`${course.instructor.firstName} 
-								${course.instructor.lastName}`}
+										{`${course?.instructor?.firstName} 
+								${course?.instructor?.lastName}`}
 									</p>
 									<p className="text-blue-50 text-sm">
-										- {course.instructor?.additionalDetails?.about}
+										- {course?.instructor?.additionalDetails?.about}
 									</p>
 								</div>
 							</div>

@@ -10,14 +10,14 @@ exports.resetPasswordToken = async (req, res) => {
 		if (!email) {
 			return res.json({
 				success: false,
-				message: "Field is required",
+				message: "Email is required",
 			});
 		}
 		const user = await User.findOne({ email });
 		if (!user) {
 			return res.json({
 				success: false,
-				message: "Your email is not registered with us",
+				message: "Account Not Found",
 			});
 		}
 
