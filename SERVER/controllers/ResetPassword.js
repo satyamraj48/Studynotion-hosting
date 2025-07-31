@@ -33,7 +33,7 @@ exports.resetPasswordToken = async (req, res) => {
 
 		//create url
 		const baseURL =
-			process.env.NODE_ENV === "Productio"
+			process.env.NODE_ENV === "Production"
 				? "https://edtech-satyamraj.vercel.app"
 				: "http://localhost:3000";
 
