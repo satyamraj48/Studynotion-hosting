@@ -30,13 +30,20 @@ exports.resetPasswordToken = async (req, res) => {
 			},
 			{ new: true }
 		);
+
 		//create url
-		const url = `http://localhost:3000/update-password/${token}`;
+		const baseURL =
+			process.env.NODE_ENV === "Productio"
+				? "https://edtech-satyamraj.vercel.app"
+				: "http://localhost:3000";
+
+		const url = baseURL + "/update-password/" + token;
 		await mailSender(
 			email,
 			"Password Reset Link",
 			`Password Reset Link : <a href=${url}>Reset Password</a>`
 		);
+
 		return res.json({
 			success: true,
 			message:

@@ -38,7 +38,7 @@ const UpdatePassword = () => {
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
 		if (password !== confirmPassword) {
-			toast.error("Check Password");
+			toast.error("Password does not match");
 			return;
 		}
 		dispatch(resetPassword(password, confirmPassword, token, navigate));
